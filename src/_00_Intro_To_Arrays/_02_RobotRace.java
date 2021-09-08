@@ -18,10 +18,10 @@ public class _02_RobotRace {
 			robs[i].setSpeed(20);
 		}
 		// 4. make each robot start at the bottom of the screen, side by side, facing up
-		
+
 		for (int i = 0; i < robs.length; i++) {
 			robs[i].setY(500);
-			robs[i].setX(850/(robs.length)*i+50);
+			robs[i].setX(850 / (robs.length) * i + 50);
 		}
 		// 5. use another for loop to iterate through the array and make each robot move
 		// a random amount less than 50.
@@ -29,29 +29,57 @@ public class _02_RobotRace {
 		int winner = 0;
 		boolean gameActive = true;
 		while (gameActive) {
-		for (int i = 0; i<robs.length;i++) {
-			robs[i].move(ran.nextInt(50));
-			if (robs[i].getY()<0) {
-				gameActive = false;
-				winner = i;
-				break;
+			for (int i = 0; i < robs.length; i++) {
+				robs[i].move(ran.nextInt(50));
+				if (robs[i].getY() < 0) {
+					gameActive = false;
+					winner = i;
+					break;
+				}
 			}
-		}
 		}
 		// 6. use a while loop to repeat step 5 until a robot has reached the top of the
 		// screen.
-		
+
 		// 7. declare that robot the winner and throw it a party!
-		JOptionPane.showMessageDialog(null,"Robot " + (winner+1)+ " is the winner!");
-		
+		JOptionPane.showMessageDialog(null, "Robot " + (winner + 1) + " is the winner!");
+
 		// 8. try different races with different amounts of robots.
 
 		// 9. make the robots race around a circular track.
-		for (int i = 0;i<robs.length;i++) {
+		for (int i = 0; i < robs.length; i++) {
 			robs[i].miniaturize();
 			robs[i].turn(90);
 			robs[i].setX(300);
-			robs[i].setY(200/(robs.length)*i+300);
+			robs[i].setY(200 / (robs.length) * i + 300);
 		}
+		int[] moveTurnAmount = new int[robs.length];
+		int[] moveTurnNumbers = new int[robs.length];
+		int[] numberOfTimes = new int[robs.length];
+		for (int i = 0; i < robs.length; i++) {
+			numberOfTimes[i] = 0;
+		}
+		for (int i = 0; i < robs.length; i++) {
+			moveTurnNumbers[i] = ran.nextInt(50);
+		}
+		for (int i = 0; i < robs.length; i++) {
+			moveTurnAmount[i] = 360 / moveTurnNumbers[i];
+		}
+		gameActive = true;
+		while (gameActive) {
+			for (int i = 0; i < robs.length; i++) {
+				robs[i].turn(360 / moveTurnNumbers[i]);
+				robs[i].move(360 / moveTurnNumbers[i]);
+				numberOfTimes[i]++;
+				if (numberOfTimes[i] == moveTurnNumbers[i]) {
+					gameActive = false;
+					winner = i;
+					break;
+				}
+			}
+		}
+		JOptionPane.showMessageDialog(null, "Robot " + (winner + 1) + " is the winner!");
+
 	}
+
 }
